@@ -1,0 +1,66 @@
+{% extends "./model.html" %}
+
+{% block body %}
+
+<h1>USERS CRUD with Flask </h1>
+{% if edit %}
+<h2>Edit User</h2>
+{% with messages = get_flashed_messages()%}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<form class="gap-4 d-flex flex-column w-50" name="login" action="/form/{{user.id}}" method="POST">
+  <div class="row">
+<div class="col-6">
+  <label class="form-label">Name</label>
+  <input type="text" class="form-control" name="name" value="{{user.name}}">
+</div>
+<div class="col-6">
+  <label class="form-label">Surname</label>
+  <input type="text" class="form-control" name="surname" value="{{user.surname}}">
+</div>
+<div>
+  <label class="form-label">Email</label>
+  <input type="email" class="form-control" name="email" value="{{user.email}}">
+</div>
+</div>
+  <button class="btn btn-primary" type="submit">Edit User</button>
+</form>
+{% endif %}
+{% if  add %}
+<h2>Add User</h2>
+{% with messages = get_flashed_messages()%}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<form class="gap-4 d-flex flex-column w-50" name="login" action="/form" method="POST">
+    <div class="row">
+  <div class="col-6">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-control" name="name">
+  </div>
+  <div class="col-6">
+    <label class="form-label">Surname</label>
+    <input type="text" class="form-control" name="surname">
+  </div>
+  <div>
+    <label class="form-label">Email</label>
+    <input type="email" class="form-control" name="email">
+  </div>
+</div>
+  <button class="btn btn-primary" type="submit">Add User</button>
+</form>
+{% endif %}
+{% endblock %}

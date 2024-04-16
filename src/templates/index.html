@@ -1,0 +1,51 @@
+{% extends "./model.html" %}
+
+{% block body %}
+
+<h1>USERS CRUD con Flask </h1>
+
+<a href="{{url_for("form")}}" class="btn btn-primary text-decoration-none">Add new User </a>
+
+<table class="table table-striped text-center">
+  <thead>
+    <tr>
+      <th scope="col">#ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Email</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if users %}
+    {% for user in users %}
+    <tr>
+      <th scope="row">{{user.id}}</th>
+      <td>{{user.name}}</td>
+      <td>{{user.surname}}</td>
+      <td>{{user.email}}</td>
+      <td><button class="btn btn-danger delete-user" data-id="{{user.id}}">Delete</button><a href="{{url_for("form_id",id=user.id)}}" class="btn btn-warning">Edit</a></td>
+    </tr>
+    {% endfor %}
+
+    {% endif %}
+  </tbody>
+</table>
+
+<script>
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-user")) {
+      let idUsuarioAEliminar = e.target.dataset.id
+      async function deleteUser(id) {
+        try {
+          let peticion = await fetch("http://localhost:5050/delete/"+id,{method:"DELETE"})
+          location.reload()
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      deleteUser(idUsuarioAEliminar)
+    }
+  })
+</script>
+{% endblock %}
